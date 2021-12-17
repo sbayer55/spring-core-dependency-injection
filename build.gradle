@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'maven-publish'
+    id 'application'
     id "io.spring.dependency-management" version "1.0.11.RELEASE"
 }
 
@@ -12,9 +13,18 @@ repositories {
     mavenLocal()
 }
 
+application {
+    mainClass = 'com.amazon.Main'
+}
+
 publishing {
+    repositories {
+        mavenLocal()
+    }
     publications {
         maven(MavenPublication) {
+            artifact distZip
+            artifact distTar
             from components.java
         }
     }
@@ -33,7 +43,7 @@ dependencies {
     implementation 'javax.inject:javax.inject:1'
 
     implementation 'com.tesseraga:car-parts-custom:1.0-SNAPSHOT'
-    implementation 'com.tesseraga:car-parts:1.0-SNAPSHOT'
+    runtimeClasspath 'com.tesseractus:car-parts:1.0-SNAPSHOT'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
