@@ -1,0 +1,44 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+    id "io.spring.dependency-management" version "1.0.11.RELEASE"
+}
+
+group 'com.amazon'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+dependencies {
+    implementation('org.springframework:spring-core:5.3.13') {
+        exclude group: 'commons-logging', module: 'commons-logging'
+    }
+    implementation('org.springframework:spring-context:5.3.13') {
+        exclude group: 'commons-logging', module: 'commons-logging'
+    }
+    implementation 'org.slf4j:slf4j-api:1.7.32'
+    implementation 'org.apache.logging.log4j:log4j-core:2.16.0'
+    implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.16.0'
+    implementation 'javax.inject:javax.inject:1'
+
+    implementation 'com.tesseraga:car-parts-custom:1.0-SNAPSHOT'
+    implementation 'com.tesseraga:car-parts:1.0-SNAPSHOT'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
+}
+
+test {
+    useJUnitPlatform()
+}
